@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     before_action :get_user_by_user_id, only: [:edit, :update, :show]
-    before_action :require_login, expect: [:show, :index]  
+    before_action :require_login, only: [:destroy, :update]  
+    
     def new
         @user = User.new
     end
@@ -12,6 +13,18 @@ class UsersController < ApplicationController
     def index
         @users = User.paginate(page: params[:page], per_page: 5)
     end 
+
+    def destroy
+        @user = User.find(params[:id])
+        @user.destroy
+        flash[:notice] = "User deleted suceessfully"
+        if @user == current_user
+            session[:user_id] = nil
+            redirect_to root_path
+        else
+            redirect_to users_path
+        end
+    end
 
     def update
         if @user.update(get_user_params)
