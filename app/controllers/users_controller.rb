@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
-    before_action :get_user_by_user_id, only: [:edit, :update]
+    before_action :get_user_by_user_id, only: [:edit, :update, :show]
     def new
         @user = User.new
     end
 
-    def edit        
+    def show
+        @articles = @user.articles        
     end
 
     def update
