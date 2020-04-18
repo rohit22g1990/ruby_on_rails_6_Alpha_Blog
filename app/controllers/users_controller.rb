@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :get_user_by_user_id, only: [:edit, :update, :show]
+    before_action :require_login, expect: [:show, :index]  
     def new
         @user = User.new
     end

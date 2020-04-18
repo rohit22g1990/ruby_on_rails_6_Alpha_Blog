@@ -18,4 +18,14 @@ module ApplicationHelper
         !!current_user
     end
 
+    def allow_action?(user)
+        logged_in? && (user == current_user || current_user.admin?)
+    end
+
+    def require_login
+        if !logged_in?
+            flash[:danger] = "Please login first"
+            redirect_to root_path
+        end
+    end
 end

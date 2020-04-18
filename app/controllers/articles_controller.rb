@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
-
+    before_action :require_login, expect: [:show, :index]
     def show
         #TODO: remove these after practice if blank
     end
